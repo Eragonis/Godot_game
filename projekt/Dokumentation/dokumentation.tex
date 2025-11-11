@@ -1,0 +1,27 @@
+\documentclass{degi}
+\makeglossaries
+\renewcommand{\mytitle}{Eigene Dokumentenklasse}
+\renewcommand{\mysubtitle}{in \LaTeX{}}
+\renewcommand{\myauthor}{Del Zordo Gianmaria}
+
+\usepackage[backend=biber,style=authoryear]{biblatex}
+\usepackage{xpatch}
+\addbibresource{literatur.bib} % deine .bib Datei
+
+\xpretobibmacro{author}{\begingroup\bfseries}{}{} % text wird fet beim author
+\xapptobibmacro{author}{\endgroup}{}{}
+
+\DeclareNameAlias{sortname}{first-last}  % Literaturverzeichnis: Vorname Nachname
+\DeclareNameAlias{default}{first-last}   % Standard für Namen im Text: Vorname Nachname
+\renewcommand*{\nameyeardelim}{\addspace} % Kein Komma zwischen Name und Jahr im Zitat
+
+\begin{document}
+
+\maketitle
+\section{Einleitung}
+
+\section{Hauptteil}
+
+\section{Fazit}
+
+\end{document}
