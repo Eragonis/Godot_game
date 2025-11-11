@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://dr5etod0jrpwx"]
+[gd_scene load_steps=16 format=3 uid="uid://dr5etod0jrpwx"]
 
 [ext_resource type="Texture2D" uid="uid://dtvgh76mc0681" path="res://Transformation_L-00.png" id="1_ivps1"]
+[ext_resource type="Script" uid="uid://cw6o200w1pt4f" path="res://player.gd" id="1_urp6f"]
 [ext_resource type="Texture2D" uid="uid://dck7c1afi6gpj" path="res://Transformation_L-01.png" id="2_urp6f"]
 [ext_resource type="Texture2D" uid="uid://bvs7he2g202lj" path="res://Transformation_L-02.png" id="3_bwjto"]
 [ext_resource type="Texture2D" uid="uid://b5m1xj2oa16pl" path="res://Transformation_L-03.png" id="4_606se"]
@@ -85,14 +86,20 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jm5j8"]
 size = Vector2(248, 267)
 
-[node name="Player" type="Node2D"]
-position = Vector2(21, 25)
+[node name="Node2D" type="Node2D"]
+position = Vector2(239, 365)
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_dx0e4")
-animation = &"death_R"
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(-38.999996, 64)
+scale = Vector2(1.072248, 1.1479073)
+script = ExtResource("1_urp6f")
+metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+sprite_frames = SubResource("SpriteFrames_dx0e4")
+animation = &"Transformation_R"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AnimatedSprite2D"]
 position = Vector2(1, 2.5)
 shape = SubResource("RectangleShape2D_jm5j8")
