@@ -37,12 +37,14 @@ func _process(delta: float):
 		$AnimatedSprite2D.animation = "Transformation"  # Transformation-Animation starten
 		$AnimatedSprite2D.play()  # Animation abspielen
 		is_transformed = true  # Setze den transformierten Zustand
+		is_transform_playing = true  # Setze den Zustand, dass die Transformation läuft
 		transform_timer.start()  # Timer starten
 		return  
 		
-		# Wenn Transformation läuft, nichts überschreiben
-		if is_transform_playing:
-			return
+	# Wenn Transformation läuft, nichts überschreiben
+	if is_transform_playing:
+		# Wir warten darauf, dass die "Transformation"-Animation abgeschlossen ist
+		return
 	
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed

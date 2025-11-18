@@ -54,7 +54,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("12_7lmhl")
 }],
-"loop": true,
+"loop": false,
 "name": &"Transformation",
 "speed": 5.0
 }, {
@@ -89,7 +89,7 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_dx0e4")
-animation = &"Idle_T"
+animation = &"Transformation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AnimatedSprite2D"]
 position = Vector2(1, 2.5)
