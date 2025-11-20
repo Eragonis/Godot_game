@@ -1,8 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://dr5etod0jrpwx"]
+[gd_scene load_steps=16 format=3 uid="uid://dr5etod0jrpwx"]
 
 [ext_resource type="Script" uid="uid://cw6o200w1pt4f" path="res://player.gd" id="1_urp6f"]
 [ext_resource type="Texture2D" uid="uid://dlfcavb3wkj6q" path="res://idle_R-00.png" id="5_7ahtn"]
+[ext_resource type="Texture2D" uid="uid://b7d52o3h6kvmo" path="res://idle_R_T-00.png" id="5_urp6f"]
 [ext_resource type="Texture2D" uid="uid://vbledhvm3xa3" path="res://idle_R-01.png" id="6_7lmhl"]
+[ext_resource type="Texture2D" uid="uid://bsr2u20o0taqp" path="res://idle_R_T-01.png" id="6_bwjto"]
+[ext_resource type="Texture2D" uid="uid://dwdupwajmt0bq" path="res://idle_R_T-02.png" id="7_606se"]
 [ext_resource type="Texture2D" uid="uid://dqlihs74vjxh5" path="res://idle_R-02.png" id="7_dx0e4"]
 [ext_resource type="Texture2D" uid="uid://ck54ut0knxura" path="res://Transformation_R-00.png" id="7_q13i1"]
 [ext_resource type="Texture2D" uid="uid://dj7nasnqxwmjf" path="res://Transformation_R-01.png" id="8_pylmc"]
@@ -29,7 +32,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("12_7lmhl")
+"texture": ExtResource("5_urp6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_bwjto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_606se")
 }],
 "loop": true,
 "name": &"Idle_T",
@@ -89,7 +98,7 @@ metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 sprite_frames = SubResource("SpriteFrames_dx0e4")
-animation = &"Transformation"
+animation = &"Idle_T"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AnimatedSprite2D"]
 position = Vector2(1, 2.5)
