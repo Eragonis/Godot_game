@@ -84,24 +84,27 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jm5j8"]
-size = Vector2(248, 267)
+size = Vector2(90.46417, 89.72851)
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(239, 365)
+position = Vector2(222, 263)
 metadata/_edit_group_ = true
 
 [node name="Player" type="Area2D" parent="."]
-position = Vector2(-38.999996, 64)
+position = Vector2(-39, 64)
 scale = Vector2(1.072248, 1.1479073)
 script = ExtResource("1_urp6f")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(-83.96979, 100.698944)
+scale = Vector2(0.36626574, 0.32867375)
 sprite_frames = SubResource("SpriteFrames_dx0e4")
 animation = &"Idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/AnimatedSprite2D"]
-position = Vector2(1, 2.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(-79.73899, 97.13324)
+scale = Vector2(0.9999999, 1)
 shape = SubResource("RectangleShape2D_jm5j8")
 
 [connection signal="body_entered" from="Player" to="Player" method="_on_body_entered"]
