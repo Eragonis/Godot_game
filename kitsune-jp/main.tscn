@@ -8,7 +8,7 @@
 [node name="level_node" parent="." instance=ExtResource("1_0xm2m")]
 
 [node name="Node2D" parent="." instance=ExtResource("1_ig7tw")]
-position = Vector2(221, 267)
+position = Vector2(180, 277)
 
 [node name="ScoreTimer" type="Timer" parent="."]
 
