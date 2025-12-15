@@ -1,8 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://sajhpliiilmc"]
+[gd_scene load_steps=3 format=3 uid="uid://sajhpliiilmc"]
+
+[ext_resource type="Script" uid="uid://du7xl7nwqvsv1" path="res://platform.gd" id="1_mi635"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5ajho"]
 
 [node name="Platform" type="StaticBody2D"]
+script = ExtResource("1_mi635")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5ajho")
