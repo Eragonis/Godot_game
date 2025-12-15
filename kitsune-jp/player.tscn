@@ -1,17 +1,25 @@
-[gd_scene load_steps=42 format=3 uid="uid://dr5etod0jrpwx"]
+[gd_scene load_steps=50 format=3 uid="uid://dr5etod0jrpwx"]
 
 [ext_resource type="Script" uid="uid://cw6o200w1pt4f" path="res://player.gd" id="1_urp6f"]
+[ext_resource type="Texture2D" uid="uid://cnk5f7kwijggs" path="res://fall-00.png" id="2_8gr2b"]
+[ext_resource type="Texture2D" uid="uid://c2nserfkfnbh8" path="res://fall-01.png" id="3_vl8ci"]
+[ext_resource type="Texture2D" uid="uid://byyb2niqqf4hr" path="res://fall-02.png" id="4_ieltc"]
 [ext_resource type="Texture2D" uid="uid://dlfcavb3wkj6q" path="res://idle_R-00.png" id="5_7ahtn"]
+[ext_resource type="Texture2D" uid="uid://cfsspuoub40rj" path="res://fall-03.png" id="5_fddr8"]
 [ext_resource type="Texture2D" uid="uid://b7d52o3h6kvmo" path="res://idle_R_T-00.png" id="5_urp6f"]
 [ext_resource type="Texture2D" uid="uid://vbledhvm3xa3" path="res://idle_R-01.png" id="6_7lmhl"]
 [ext_resource type="Texture2D" uid="uid://bsr2u20o0taqp" path="res://idle_R_T-01.png" id="6_bwjto"]
+[ext_resource type="Texture2D" uid="uid://qnffg5furak" path="res://fall_T-00.png" id="6_oybyf"]
 [ext_resource type="Texture2D" uid="uid://dwdupwajmt0bq" path="res://idle_R_T-02.png" id="7_606se"]
+[ext_resource type="Texture2D" uid="uid://5f2wc68h4ike" path="res://fall_T-01.png" id="7_ajfva"]
 [ext_resource type="Texture2D" uid="uid://dqlihs74vjxh5" path="res://idle_R-02.png" id="7_dx0e4"]
 [ext_resource type="Texture2D" uid="uid://ck54ut0knxura" path="res://Transformation_R-00.png" id="7_q13i1"]
+[ext_resource type="Texture2D" uid="uid://bqeyqjaatdpg4" path="res://fall_T-02.png" id="8_5ef02"]
 [ext_resource type="Texture2D" uid="uid://7pcuptsct0tk" path="res://jump-00.png" id="8_iruf7"]
 [ext_resource type="Texture2D" uid="uid://dj7nasnqxwmjf" path="res://Transformation_R-01.png" id="8_pylmc"]
 [ext_resource type="Texture2D" uid="uid://bfvt7pei5jfjh" path="res://jump-01.png" id="9_j5n4i"]
 [ext_resource type="Texture2D" uid="uid://c0jaqfik6snfu" path="res://Transformation_R-02.png" id="9_pbfsw"]
+[ext_resource type="Texture2D" uid="uid://cs06ljfxqqctt" path="res://fall_T-03.png" id="9_pfmca"]
 [ext_resource type="Texture2D" uid="uid://bcdorw346slxt" path="res://Transformation_R-03.png" id="10_5tmop"]
 [ext_resource type="Texture2D" uid="uid://c468bh13njm8g" path="res://jump-02.png" id="10_634y6"]
 [ext_resource type="Texture2D" uid="uid://baibc8uwa1en8" path="res://Transformation_R-04.png" id="11_7ahtn"]
@@ -42,6 +50,40 @@
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dx0e4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8gr2b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vl8ci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ieltc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fddr8")
+}],
+"loop": true,
+"name": &"Fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_oybyf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ajfva")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5ef02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pfmca")
+}],
+"loop": true,
+"name": &"Fall_T",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_7ahtn")
@@ -214,7 +256,7 @@ metadata/_edit_group_ = true
 position = Vector2(-91.89705, 109.41044)
 scale = Vector2(0.30643737, 0.2705971)
 sprite_frames = SubResource("SpriteFrames_dx0e4")
-animation = &"Jump_T"
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(-88.59888, 107.15149)

@@ -2,92 +2,101 @@ extends Area2D
 
 signal hit
 
-@export var speed = 400 # How fast the player will move (pixels/sec).
-var screen_size # Size of the game window.
+@export var speed: int = 400
+@export var jump_speed: int = -800
+@export var custom_gravity: int = 1600
+@onready var animations: AnimatedSprite2D = $AnimatedSprite2D
 
-var is_transformed = false  # Flag für den transformierten Zustand
-var is_transform_playing = false
-var transform_timer: Timer # Der Timer für den transformierten Zustand
+var velocity = Vector2.ZERO
+var is_transformed = false
+var is_jumping = false
+var screen_size
+var transform_timer: Timer
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
 
-	# Timer initialisieren und mit der Funktion "on_transform_timeout" verbinden
 	transform_timer = Timer.new()
-	transform_timer.wait_time = 30.0  # Transformation dauert 30 Sekunden
-	transform_timer.one_shot = true    # Timer nur einmal ausführen
-	transform_timer.timeout.connect(self._on_transform_timeout)
-	add_child(transform_timer)         # Timer zum aktuellen Node hinzufügen
-	
-	$AnimatedSprite2D.animation_finished.connect(_on_anim_finished)
+	transform_timer.wait_time = 30.0
+	transform_timer.one_shot = true
+	transform_timer.timeout.connect(_on_transform_timeout)
+	add_child(transform_timer)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+	animations.animation_finished.connect(_on_anim_finished)
+
 func _process(delta: float):
-	var velocity = Vector2.ZERO # The player's movement vector.
-	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
-	if Input.is_action_just_pressed("Jump"):
-		velocity.y -= 1   # normalerweise nach oben = negativ
-		
-	# Transformation aktivieren (Taste R)
-	if Input.is_action_just_pressed("Transformation") and !is_transformed:
-		$AnimatedSprite2D.animation = "Transformation"  # Transformation-Animation starten
-		$AnimatedSprite2D.play()  # Animation abspielen
-		is_transformed = true  # Setze den transformierten Zustand
-		is_transform_playing = true  # Setze den Zustand, dass die Transformation läuft
-		transform_timer.start()  # Timer starten
-		return  
-		
-	# Wenn Transformation läuft, nichts überschreiben
-	if is_transform_playing:
-		# Wir warten darauf, dass die "Transformation"-Animation abgeschlossen ist
-		return
+	apply_gravity(delta)
+	handle_input(delta)
 	
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-		position += velocity * delta
-		position = position.clamp(Vector2.ZERO, screen_size)
-		
-		
-		if velocity.x !=0:
-			$AnimatedSprite2D.animation = "Walk"
-			$AnimatedSprite2D.flip_v = false
-			$AnimatedSprite2D.flip_h = velocity.y > 0
-		
-		if velocity.y !=0:
-			$AnimatedSprite2D.animation = "Jump"
-			$AnimatedSprite2D.flip_v = velocity.y > 0
-		
-	else:
-		if is_transformed:
-			$AnimatedSprite2D.animation = "Idle_T"  # Transformierte Idle-Animation
-		else:
-			$AnimatedSprite2D.animation = "Idle"  # Normale Idle-Animation
-		$AnimatedSprite2D.play()
+	# Bewegung anwenden
+	position += velocity * delta
+	position = position.clamp(Vector2.ZERO, screen_size)
+
+	# Kollisionslogik: Bodenberührung
+	if position.y >= screen_size.y - 100:  # Hier sicherstellen, dass "Boden" getroffen wird
+		is_jumping = false
+		velocity.y = 0  # Schwerkraft stoppen
+		update_animation()  # Animation wechseln auf Idle/Landen
+
+	update_animation()
+
+func apply_gravity(delta: float):
+	if is_jumping:
+		velocity.y += custom_gravity * delta
+
+func handle_input(delta: float):
+	var velocity_x = 0
+
+	# Horizontalbewegung (links/rechts)
+	if Input.is_action_pressed("move_right"):
+		velocity_x += 1
+	if Input.is_action_pressed("move_left"):
+		velocity_x -= 1
+
+	# Transformation aktivieren
+	if Input.is_action_just_pressed("Transformation") and !is_transformed:
+		is_transformed = true
+		animations.animation = "Transformation"
+		animations.play()
+		transform_timer.start()
+		return
+
+	# Geschwindigkeit an Transformationszustand anpassen
+	var current_speed = speed * (2 if is_transformed else 1)
+	velocity.x = velocity_x * current_speed
+
+	# Springen nur vom Boden aus
+	if Input.is_action_just_pressed("Jump") and not is_jumping:
+		is_jumping = true
+		velocity.y = jump_speed * (2 if is_transformed else 1)
+
+func update_animation():
+	# Kontrolliere, welche Animationen abgespielt werden sollen
+	if velocity.y < 0:  # Nach oben springen
+		animations.animation = "Jump_T" if is_transformed else "Jump"
+	elif velocity.y > 0:  # Beim Fallen nach unten
+		animations.animation = "Fall_T" if is_transformed else "Fall"
+	elif velocity.x != 0:  # Bewegung links/rechts
+		animations.animation = "Walk_T" if is_transformed else "Walk"
+		animations.flip_h = velocity.x < 0
+	else:  # Stillstand
+		animations.animation = "Idle_T" if is_transformed else "Idle"
+	animations.play()
+
+func _on_transform_timeout():
+	is_transformed = false
 
 func _on_anim_finished():
-	if $AnimatedSprite2D.animation == "Transformation":
-		# Wenn Transformation fertig ist → Idle_T starten
-		is_transform_playing = false
-		$AnimatedSprite2D.animation = "Idle_T"
-		$AnimatedSprite2D.play()
-		
-		
-# Diese Funktion wird aufgerufen, wenn der Transformation-Timer abgelaufen ist
-func _on_transform_timeout():
-	is_transformed = false  # Setze den transformierten Zustand zurück
-	$AnimatedSprite2D.animation = "Idle"  # Zurück zur normalen Idle-Animation
-	$AnimatedSprite2D.play()
+	if animations.animation == "Transformation":
+		animations.animation = "Idle_T" if is_transformed else "Idle"
+		animations.play()
 
-
-func _on_body_entered(body: Node2D) -> void:
-	hide() # Player disappears after being hit.
+func _on_body_entered(body: Node2D):
+	# Spieler wird bei Kollision versteckt
+	hide()
 	hit.emit()
-	# Must be deferred as we can't change physics properties on a physics callback.
 	$CollisionShape2D.set_deferred("disabled", true)
+
 func start(pos):
 	position = pos
 	show()

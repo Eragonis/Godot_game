@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://c71jpi4880fhp"]
+
+[ext_resource type="Texture2D" uid="uid://dygrwiwcaw3d7" path="res://Night.png" id="1_52x1o"]
+[ext_resource type="Texture2D" uid="uid://cvd1k0lajv2n8" path="res://Dark Tree.png" id="2_iincs"]
+[ext_resource type="PackedScene" uid="uid://dr5etod0jrpwx" path="res://player.tscn" id="3_nk1il"]
+[ext_resource type="PackedScene" uid="uid://sajhpliiilmc" path="res://platform.tscn" id="4_d6qko"]
+
+[node name="Level" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1060.0
+offset_bottom = 648.0
+color = Color(0.46756345, 0.114942335, 0.7598355, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1154.0
+offset_bottom = 652.0
+texture = ExtResource("1_52x1o")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 1.0
+offset_top = 227.0
+offset_right = 453.0
+offset_bottom = 510.0
+texture = ExtResource("2_iincs")
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+offset_left = 451.0
+offset_top = 224.0
+offset_right = 903.0
+offset_bottom = 507.0
+texture = ExtResource("2_iincs")
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+offset_left = 902.0
+offset_top = 225.0
+offset_right = 1354.0
+offset_bottom = 508.0
+texture = ExtResource("2_iincs")
+
+[node name="Node2D" parent="." instance=ExtResource("3_nk1il")]
+
+[node name="Platform" parent="." instance=ExtResource("4_d6qko")]
+position = Vector2(373, 573.00006)
+scale = Vector2(37.243954, 7.6309958)
