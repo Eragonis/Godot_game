@@ -1,10 +1,15 @@
 extends CharacterBody2D
 
-@export var speed: int = 50
+@export var speed: int = 160
 @export var acceleration: int = 5
-@export var jump_speed: int = -speed * 3
+@export var jump_speed: int = -speed * 2
 @export var gravity: int = speed * 5
+@export var down_gravity_factor: float = 3
+
+
 @onready var animations: AnimatedSprite2D = $AnimatedSprite2D
+@onready var jump_buffer_time: Timer = $JumpBufferTime
+@onready var kitsune_timer: Timer = $KitsuneTime
 
 enum State{IDLE, WALK, JUMP, DOWN}
 var current_state: State = State.IDLE
@@ -25,9 +30,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func handle_input() -> void:
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = jump_speed
-		current_state = State.JUMP
+	if Input.is_action_just_pressed("ui_accept"):
+		jump_buffer_time.start()
 	
 	var direction = Input.get_axis("ui_left", "ui_right")
 	
@@ -38,7 +42,16 @@ func handle_input() -> void:
 
 
 func update_mocement(delta: float) -> void:
-	velocity.y += gravity * delta 
+	if (is_on_floor() || kitsune_timer.time_left >0) && jump_buffer_time.time_left > 0:
+		velocity.y = jump_speed
+		current_state = State.JUMP
+		jump_buffer_time.stop() 
+		kitsune_timer.stop()
+		
+	if current_state == State.JUMP:
+		velocity.y += gravity * delta 
+	else:
+		velocity.y += gravity * down_gravity_factor * delta
 
 
 func update_states() -> void:
@@ -51,7 +64,7 @@ func update_states() -> void:
 				current_state =State.IDLE
 			if not is_on_floor() && velocity.y > 0:
 				current_state = State.DOWN
-				
+				kitsune_timer.start()
 				
 		State.JUMP when velocity.y > 0:
 			current_state = State.DOWN
