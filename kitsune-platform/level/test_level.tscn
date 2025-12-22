@@ -77,6 +77,10 @@ editable = false
 
 [node name="Player" parent="." instance=ExtResource("1_dsqel")]
 position = Vector2(99, 497)
+speed = 160
+acceleration = 5
+down_gravity_factor = 3.0
+trans_speed = 240
 
 [node name="TileMap" type="Node2D" parent="."]
 

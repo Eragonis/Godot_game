@@ -170,7 +170,7 @@ animations = [{
 "texture": ExtResource("32_g2qsj")
 }],
 "loop": true,
-"name": &"tranformation",
+"name": &"transform",
 "speed": 5.0
 }, {
 "frames": [{
@@ -204,6 +204,10 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_4c0ct")
+speed = null
+acceleration = null
+down_gravity_factor = null
+trans_speed = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ys7hh")
@@ -212,10 +216,8 @@ shape = SubResource("CapsuleShape2D_ys7hh")
 position = Vector2(-11, -1)
 scale = Vector2(0.25, 0.25)
 sprite_frames = SubResource("SpriteFrames_db8nr")
-animation = &"idle"
+animation = &"transform"
 autoplay = "idle"
-frame = 2
-frame_progress = 0.98743457
 
 [node name="JumpBufferTime" type="Timer" parent="."]
 wait_time = 0.1
